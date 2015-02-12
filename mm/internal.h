@@ -185,6 +185,7 @@ unsigned long
 isolate_migratepages_range(struct compact_control *cc,
 			   unsigned long low_pfn, unsigned long end_pfn);
 
+extern void compact_nodes(void);
 #endif
 
 /*

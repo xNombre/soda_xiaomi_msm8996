@@ -260,6 +260,10 @@ config COMPACTION
 	help
 	  Allows the compaction of memory for the allocation of huge pages.
 
+config AUTO_COMPACTION
+	bool "Automatically compact memory after screen is turned off
+	depends on COMPACTION
+
 #
 # support for page migration
 #

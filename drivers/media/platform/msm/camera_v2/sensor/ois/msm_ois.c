@@ -367,17 +367,17 @@ static void msm_ois_fw_dl(struct work_struct *work)
 	func_COEF_DOWNLOAD(0);
 	VCOSET1();
 
-	pr_info("sleep 30ms for gyro \n");
+	pr_debug("sleep 30ms for gyro \n");
 	usleep_range(30000, 32000);
-	pr_info("Gyro active \n");
+	pr_debug("Gyro active \n");
 	I2C_OIS_per_write(0x18, 0x000F);
 	I2C_OIS_per_write(0x1B, 0x6B01);
 	I2C_OIS_per_write(0x1C, 0x0000);
-	pr_info("sleep 30ms for gyro \n");
+	pr_debug("sleep 30ms for gyro \n");
 	usleep_range(30000, 32000);
 
 	I2C_OIS_spcl_cmnd(1, _cmd_8C_EI);
-	pr_info("%s ois goff 0x%x, 0x%x\n", __func__, FADJ_MEM.gl_GX_OFS, FADJ_MEM.gl_GY_OFS);
+	pr_debug("%s ois goff 0x%x, 0x%x\n", __func__, FADJ_MEM.gl_GX_OFS, FADJ_MEM.gl_GY_OFS);
 	if (g_fadj_gyro_kd == 0) {
 		g_fadj_gyro_kd = fadj_ois_gyro_offset_calibraion();
 	}

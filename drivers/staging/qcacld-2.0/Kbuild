@@ -195,7 +195,7 @@ endif
 BUILD_DEBUG_VERSION := 0
 
 #Enable this flag to build driver in diag version
-BUILD_DIAG_VERSION := 1
+BUILD_DIAG_VERSION := 0
 
 #Do we panic on bug?  default is to warn
 PANIC_ON_BUG := 1
@@ -1019,8 +1019,7 @@ CDEFINES :=	-DANI_LITTLE_BYTE_ENDIAN \
 		-DANI_LOGDUMP \
 		-DWLAN_PERF \
 		-DPTT_SOCK_SVC_ENABLE \
-		-Wall\
-		-Werror\
+                -Wall\
 		-D__linux__ \
 		-DHAL_SELF_STA_PER_BSS=1 \
 		-DWLAN_FEATURE_VOWIFI_11R \

@@ -2761,7 +2761,6 @@ static void usb_bam_sps_events(enum sps_callback_case sps_cb_case, void *user)
 
 	switch (sps_cb_case) {
 	case SPS_CALLBACK_BAM_TIMER_IRQ:
-
 		log_event_dbg("%s: received SPS_CALLBACK_BAM_TIMER_IRQ\n",
 				__func__);
 

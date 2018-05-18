@@ -522,15 +522,15 @@ static unsigned long lowmem_scan(struct shrinker *s, struct shrink_control *sc)
 
 		if (test_task_flag(selected, TIF_MEMDIE) &&
 		    (test_task_state(selected, TASK_UNINTERRUPTIBLE))) {
-			lowmem_print(2, "'%s' (%d) is already killed\n",
+			/*lowmem_print(2, "'%s' (%d) is already killed\n",
 				     selected->comm,
-				     selected->pid);
+				     selected->pid);*/
 			rcu_read_unlock();
 			mutex_unlock(&scan_mutex);
 			return 0;
 		}
 
-		lowmem_print(1, "Killing '%s' (%d), adj %hd,\n" \
+		/*lowmem_print(1, "Killing '%s' (%d), adj %hd,\n" \
 				"   to free %ldkB on behalf of '%s' (%d) because\n" \
 				"   cache %ldkB is below limit %ldkB for oom_score_adj %hd\n" \
 				"   Free memory is %ldkB above reserved.\n" \
@@ -555,13 +555,12 @@ static unsigned long lowmem_scan(struct shrinker *s, struct shrink_control *sc)
 			     global_page_state(NR_FILE_PAGES) *
 				(long)(PAGE_SIZE / 1024),
 			     (long)zcache_pages() * (long)(PAGE_SIZE / 1024),
-			     sc->gfp_mask);
-
+			     sc->gfp_mask);*/
+		lowmem_print(1, "Killing '%s'\n", selected->comm);
 		if (lowmem_debug_level >= 2 && selected_oom_score_adj == 0) {
 			show_mem(SHOW_MEM_FILTER_NODES);
 			dump_tasks(NULL, NULL);
 		}
-
 		lowmem_deathpending_timeout = jiffies + HZ;
 		set_tsk_thread_flag(selected, TIF_MEMDIE);
 		send_sig(SIGKILL, selected, 0);

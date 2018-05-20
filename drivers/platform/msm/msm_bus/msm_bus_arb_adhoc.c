@@ -1152,8 +1152,8 @@ static int update_context(uint32_t cl, bool active_only,
 		goto exit_update_context;
 	}
 	if (pdata->active_only == active_only) {
-		MSM_BUS_ERR("No change in context(%d==%d), skip\n",
-					pdata->active_only, active_only);
+		//MSM_BUS_ERR("No change in context(%d==%d), skip\n",
+		//			pdata->active_only, active_only);
 		ret = -ENXIO;
 		goto exit_update_context;
 	}

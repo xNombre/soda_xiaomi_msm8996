@@ -750,11 +750,11 @@ static struct mdss_rot_hw_resource *mdss_rotator_hw_alloc(
 	hw->ctl->wb_type = MDSS_MDP_WB_CTL_TYPE_BLOCK;
 
 
-	if (hw->ctl->ops.start_fnc)
+	if (hw->ctl->ops.start_fnc) {
 		ret = hw->ctl->ops.start_fnc(hw->ctl);
-
-	if (ret)
-		goto error;
+		if (ret)
+			goto error;
+	}
 
 	if (pipe_id >= mdata->ndma_pipes)
 		goto error;

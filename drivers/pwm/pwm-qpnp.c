@@ -1147,6 +1147,10 @@ static int qpnp_lpg_configure_lut_states(struct qpnp_pwm_chip **chips,
 	bool			test_enable;
 	u8 ramp_en = 0, ramp_mask = 0;
 
+	if (!num) {
+		pr_err("%s: Num is zero\n", __func__);
+		return -EINVAL;
+	}
 
 	for (i = 0; i < num; i++) {
 		chip = chips[i];

@@ -13948,9 +13948,11 @@ static int msm_routing_probe(struct snd_soc_platform *platform)
 
 	snd_soc_add_platform_controls(platform, aptx_dec_license_controls,
 					ARRAY_SIZE(aptx_dec_license_controls));
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 /* ELUS Starts */
 	elliptic_add_platform_controls(platform);
 /* ELUS Ends  */
+#endif
 	return 0;
 }
 

@@ -36,6 +36,7 @@ config MACH_XIAOMI_A7
 config MACH_XIAOMI_A8
 	bool "A8 board"
 	select MACH_XIAOMI_MSM8996
+	select XIAOMI_ELLIPTIC
 	help
 	  Support for Xiaomi Mi Mix (lithium)
 

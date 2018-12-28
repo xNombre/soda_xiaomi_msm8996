@@ -97,6 +97,12 @@ config SND_SOC_CPE
 	 The configuration includes the cpe lsm driver to enable
 	 listen on codec.
 
+config XIAOMI_ELLIPTIC
+	bool
+	depends on SLIMBUS
+	help
+	  Add support for Elliptic Ultrasound speaker.
+
 config SND_SOC_APQ8084
 	tristate "SoC Machine driver for APQ8084 boards"
 	depends on ARCH_APQ8084

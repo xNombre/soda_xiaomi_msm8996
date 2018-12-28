@@ -25,7 +25,9 @@
 #include <sound/q6afe-v2.h>
 #include <sound/q6audio-v2.h>
 #include <sound/q6core.h>
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 #include "msm-elliptic.h"
+#endif
 #include "msm-pcm-routing-v2.h"
 #include <sound/audio_cal_utils.h>
 #include <sound/adsp_err.h>
@@ -116,8 +118,10 @@ struct afe_ctl {
 	struct afe_sp_th_vi_get_param_resp	th_vi_resp;
 	struct afe_sp_ex_vi_get_param_resp	ex_vi_resp;
 
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 	struct afe_ultrasound_calib_get_resp ultrasound_calib_data;
 	atomic_t elusAprState;
+#endif
 
 	int vi_tx_port;
 	int vi_rx_port;
@@ -147,6 +151,7 @@ bool afe_close_done[2] = {true, true};
 #define SIZEOF_CFG_CMD(y) \
 		(sizeof(struct apr_hdr) + sizeof(u16) + (sizeof(struct y)))
 
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 atomic_t *ptr_elusAprState = &this_afe.elusAprState;
 void **ptr_apr = &this_afe.apr;
 atomic_t *ptr_status = &this_afe.status;
@@ -155,6 +160,7 @@ wait_queue_head_t *ptr_wait = this_afe.wait;
 int afe_timeout_ms = TIMEOUT_MS;
 struct afe_ultrasound_calib_get_resp *ptr_ultrasound_calib_data =
 		&this_afe.ultrasound_calib_data;
+#endif
 
 static int afe_get_cal_hw_delay(int32_t path,
 				struct audio_cal_hw_delay_entry *entry);
@@ -341,11 +347,13 @@ static int32_t afe_callback(struct apr_client_data *data, void *priv)
 			return -EINVAL;
 
 		wake_up(&this_afe.wait[data->token]);
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 	} else if (data->opcode == ULTRASOUND_OPCODE) {
 		if (data->payload != NULL)
 			process_us_payload(data->payload);
 		else
 			pr_err("%s: payload == NULL !\n", __func__);
+#endif
 	} else if (data->payload_size) {
 		uint32_t *payload;
 		uint16_t port_id = 0;

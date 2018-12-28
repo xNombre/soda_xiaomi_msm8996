@@ -100,7 +100,9 @@ static int speaker_id_gpio = -1;
 static bool codec_reg_done;
 
 static const char *const speaker_id_text[] = {"None", "AAC", "Knowles", "Goer"};
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 static const char *const ultrasound_power_text[] = {"Off", "On"};
+#endif
 static const char *const hifi_function[] = {"Off", "On"};
 static const char *const pin_states[] = {"Disable", "active"};
 static const char *const spk_function[] = {"Off", "On"};
@@ -299,8 +301,10 @@ struct msm8996_asoc_mach_data {
 	int us_euro_gpio;
 	int hph_en1_gpio;
 	int hph_en0_gpio;
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 	struct regulator *us_p_power;
 	struct regulator *us_n_power;
+#endif
 	struct snd_info_entry *codec_root;
 };
 
@@ -2678,6 +2682,7 @@ static const struct soc_enum msm_snd_enum[] = {
 
 static const struct soc_enum speaker_id_enum =
 				SOC_ENUM_SINGLE_EXT(4, speaker_id_text);
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 static const struct soc_enum ultrasound_power_enum =
 				SOC_ENUM_SINGLE_EXT(2, ultrasound_power_text);
 
@@ -2714,6 +2719,7 @@ static int msm_ultrasound_power_put(struct snd_kcontrol *kcontrol,
 
 	return 0;
 }
+#endif
 
 static int msm_speaker_id_get(struct snd_kcontrol *kcontrol,
 				struct snd_ctl_elem_value *ucontrol)
@@ -2808,8 +2814,10 @@ static const struct snd_kcontrol_new msm_snd_controls[] = {
 			msm_quat_mi2s_rx_ch_get, msm_quat_mi2s_rx_ch_put),
 	SOC_ENUM_EXT("QUAT_MI2S_TX Channels", msm8996_mi2s_snd_enum[9],
 			msm_quat_mi2s_tx_ch_get, msm_quat_mi2s_tx_ch_put),
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 	SOC_ENUM_EXT("Ultrasound Power", ultrasound_power_enum,
 			msm_ultrasound_power_get, msm_ultrasound_power_put),
+#endif
 	SOC_ENUM_EXT("Speaker ID", speaker_id_enum, msm_speaker_id_get, NULL),
 	SOC_SINGLE_EXT("Version", 0, 0, UINT_MAX, 0, msm_version_get, NULL),
 };
@@ -5580,6 +5588,7 @@ static int msm8996_asoc_machine_probe(struct platform_device *pdev)
 		dev_info(&pdev->dev, "msm8996_prepare_us_euro failed (%d)\n",
 			ret);
 
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 	pdata->us_p_power = regulator_get(&pdev->dev, "vreg_pa_p_5p0");
 	if (IS_ERR(pdata->us_p_power)) {
 		dev_info(&pdev->dev, "ultrasound p power can't be found\n");
@@ -5596,6 +5605,7 @@ static int msm8996_asoc_machine_probe(struct platform_device *pdev)
 	} else {
 		pdata->us_n_power = NULL;
 	}
+#endif
 
 	speaker_id_gpio = of_get_named_gpio(pdev->dev.of_node, "spkr-id-gpio", 0);
 	if (!gpio_is_valid(speaker_id_gpio)) {
@@ -5633,10 +5643,12 @@ static int msm8996_asoc_machine_remove(struct platform_device *pdev)
 	struct msm8996_asoc_mach_data *pdata =
 				snd_soc_card_get_drvdata(card);
 
+#ifdef CONFIG_XIAOMI_ELLIPTIC
 	if (pdata->us_p_power)
 		regulator_put(pdata->us_p_power);
 	if (pdata->us_n_power)
 		regulator_put(pdata->us_n_power);
+#endif
 
 	if (gpio_is_valid(ext_us_amp_gpio))
 		gpio_free(ext_us_amp_gpio);

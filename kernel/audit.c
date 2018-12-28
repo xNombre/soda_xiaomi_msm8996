@@ -272,7 +272,7 @@ void audit_log_lost(const char *message)
 
 	if (print) {
 		if (printk_ratelimit())
-			pr_warn("audit_lost=%u audit_rate_limit=%u audit_backlog_limit=%u\n",
+			pr_debug("audit_lost=%u audit_rate_limit=%u audit_backlog_limit=%u\n",
 				atomic_read(&audit_lost),
 				audit_rate_limit,
 				audit_backlog_limit);
@@ -394,9 +394,9 @@ static void audit_printk_skb(struct sk_buff *skb)
 
 	if (nlh->nlmsg_type != AUDIT_EOE) {
 		if (printk_ratelimit())
-			pr_notice("type=%d %s\n", nlh->nlmsg_type, data);
-		else
-			audit_log_lost("printk limit exceeded");
+			pr_debug("type=%d %s\n", nlh->nlmsg_type, data);
+		//else
+		//	audit_log_lost("printk limit exceeded");
 	}
 
 	audit_hold_skb(skb);
@@ -1951,9 +1951,7 @@ void audit_log_end(struct audit_buffer *ab)
 {
 	if (!ab)
 		return;
-	if (!audit_rate_check()) {
-		audit_log_lost("rate limit exceeded");
-	} else {
+	if (audit_rate_check()) {
 		struct nlmsghdr *nlh = nlmsg_hdr(ab->skb);
 
 		nlh->nlmsg_len = ab->skb->len;

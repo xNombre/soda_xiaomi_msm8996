@@ -634,11 +634,9 @@ KBUILD_CFLAGS += -fgraphite -fgraphite-identity -floop-parallelize-all
 endif
 
 ifdef CONFIG_SODA_SPARKLING_FLAGS
-KBUILD_CFLAGS += -march=armv8-a+simd+crypto+crc -mtune=cortex-a57.cortex-a53 -fmerge-all-constants
+KBUILD_CFLAGS += -march=armv8-a+simd+crypto+crc -mtune=cortex-a57.cortex-a53 -fmerge-all-constants -fmodulo-sched -fmodulo-sched-allow-regmoves -floop-interchange
 # -finline-functions -> no significant performance jump, significantly increased size
 # -fpredictive-commoning -> slowing down intercore scores
-# -fmodulo-sched -fmodulo-sched-allow-regmoves -> gcc segfault lol
-# -floop-interchange -> probably incompatible?
 # -ffast-math -ftree-vectorize -ftree-slp-vectorize
 endif
 

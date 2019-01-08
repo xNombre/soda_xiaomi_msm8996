@@ -308,6 +308,7 @@
 	fpc_fpc1020 {
 		compatible = "fpc,fpc1020";
 		fpc,irq-gpio	= <&tlmm 121 0x2001>;
+		interrupt-parent = <&tlmm>;
 		fpc,fp-id-gpio = <&pm8994_gpios 10 0x00>;
 		pinctrl-names = "pmx_fp_active", "pmx_fp_suspend";
 		pinctrl-0 = <&fp_active>;

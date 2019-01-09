@@ -34,7 +34,7 @@
 };
 
 &sdcc1_ice {
-	status = "ok";
+	status = "disabled";
 };
 
 &ufsphy1 {
@@ -49,46 +49,19 @@
 	status = "disabled";
 };
 
+&pcie1 {
+	status = "disabled";
+};
+
+&pcie2 {
+	status = "disabled";
+};
+
 &sdhc_1 {
-	vdd-supply = <&pm8994_l20>;
-	qcom,vdd-voltage-level = <2950000 2950000>;
-	qcom,vdd-current-level = <200 570000>;
-
-	vdd-io-supply = <&pm8994_s4>;
-	qcom,vdd-io-always-on;
-	qcom,vdd-io-voltage-level = <1800000 1800000>;
-	qcom,vdd-io-current-level = <110 325000>;
-
-	pinctrl-names = "active", "sleep";
-	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
-	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
-
-	qcom,clk-rates = <400000 20000000 25000000 50000000 96000000 192000000 384000000>;
-	qcom,ice-clk-rates = <300000000 150000000>;
-	qcom,nonremovable;
-	qcom,bus-speed-mode = "HS400_1p8v", "HS200_1p8v", "DDR_1p8v";
-
 	status = "disabled";
 };
 
 &sdhc_2 {
-	vdd-supply = <&pm8994_l21>;
-	qcom,vdd-voltage-level = <2950000 2950000>;
-	qcom,vdd-current-level = <200 800000>;
-
-	vdd-io-supply = <&pm8994_l13>;
-	qcom,vdd-io-voltage-level = <1800000 2950000>;
-	qcom,vdd-io-current-level = <200 22000>;
-
-	pinctrl-names = "active", "sleep";
-	pinctrl-0 = <&sdc2_clk_on  &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
-	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
-
-	qcom,clk-rates = <400000 20000000 25000000 50000000 100000000 200000000>;
-	qcom,bus-speed-mode = "SDR12", "SDR25", "SDR50", "DDR50", "SDR104";
-
-	cd-gpios = <&tlmm 95 0x1>;
-
 	status = "disabled";
 };
 
@@ -274,18 +247,6 @@
 };
 
 &mdss_hdmi_tx {
-	pinctrl-names = "hdmi_hpd_active", "hdmi_ddc_active", "hdmi_cec_active",
-				"hdmi_active", "hdmi_sleep";
-	pinctrl-0 = <&mdss_hdmi_hpd_active &mdss_hdmi_ddc_suspend
-						&mdss_hdmi_cec_suspend>;
-	pinctrl-1 = <&mdss_hdmi_hpd_active &mdss_hdmi_ddc_active
-						&mdss_hdmi_cec_suspend>;
-	pinctrl-2 = <&mdss_hdmi_hpd_active &mdss_hdmi_cec_active
-						&mdss_hdmi_ddc_suspend>;
-	pinctrl-3 = <&mdss_hdmi_hpd_active &mdss_hdmi_ddc_active
-						&mdss_hdmi_cec_active>;
-	pinctrl-4 = <&mdss_hdmi_hpd_suspend &mdss_hdmi_ddc_suspend
-						&mdss_hdmi_cec_suspend>;
 	status = "disabled";
 };
 
@@ -590,7 +551,7 @@
 };
 
 &usb_otg_switch {
-	status = "okay";
+	status = "disabled";
 };
 
 &usb3 {
@@ -2029,4 +1990,33 @@
 		};
 	};
 };
+
+//msm8996-sde.dtsi
+
+&sde_kms {
+	status = "disabled";
+};
+
+&sde_dsi0 {
+	status = "disabled";
+};
+
+&sde_dsi1 {
+	status = "disabled";
+};
+
+&sde_dsi_phy0 {
+	status = "disabled";
+};
+
+&sde_dsi_phy1 {
+	status = "disabled";
+};
+
+&sde_hdmi {
+	status = "disabled";
+};
+
+//msm8996-sde.dtsi end
+
 // msm8996.dtsi end

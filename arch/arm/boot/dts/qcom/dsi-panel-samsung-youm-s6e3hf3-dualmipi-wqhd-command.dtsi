@@ -87,12 +87,15 @@
 		qcom,mdss-dsi-te-dcs-command = <1>;
 		qcom,mdss-dsi-te-check-enable;
 		qcom,mdss-dsi-te-using-te-pin;
+
 		qcom,ulps-enabled;
+		qcom,panel-allow-phy-poweroff;
+		qcom,suspend-ulps-enabled;
+
 		qcom,dispparam-enabled;
 		qcom,mdss-dsi-panel-status-check-mode = "bta_check";
 		qcom,mdss-dsi-tx-eot-append;
 		qcom,dcs-cmd-by-left;
-		qcom,mdss-dsi-lp11-init;
 		qcom,mdss-dsi-panel-clockrate = <855000000>;
 		qcom,esd-err-irq-gpio = <&tlmm 29 0x2001>;
 		qcom,panel-supply-entries = <&dsi_panel_pwr_supply_amoled>;

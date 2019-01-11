@@ -84,13 +84,16 @@
 		qcom,mdss-dsi-te-dcs-command = <1>;
 		qcom,mdss-dsi-te-check-enable;
 		qcom,mdss-dsi-te-using-te-pin;
-		qcom,ulps-enabled;
 		qcom,dispparam-enabled;
 		qcom,mdss-dsi-min-refresh-rate = <50>;
 		qcom,mdss-dsi-max-refresh-rate = <60>;
 		qcom,mdss-dsi-panel-status-check-mode = "bta_check";
 		qcom,mdss-dsi-tx-eot-append;
-		qcom,mdss-dsi-lp11-init;
+
+		qcom,ulps-enabled;
+		qcom,panel-allow-phy-poweroff;
+		qcom,suspend-ulps-enabled;
+
 		qcom,panel-supply-entries = <&dsi_panel_pwr_supply_amoled>;
 
 		qcom,mdss-dsi-panel-timings-8996 = [

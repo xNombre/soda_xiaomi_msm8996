@@ -40,7 +40,7 @@ static DEFINE_IDR(zram_index_idr);
 static DEFINE_MUTEX(zram_index_mutex);
 
 static int zram_major;
-static const char *default_compressor = "lzo";
+static const char *default_compressor = "lz4";
 
 /*
  * We don't need to see memory allocation errors more than once every 1
@@ -412,26 +412,6 @@ static ssize_t comp_algorithm_show(struct device *dev,
 static ssize_t comp_algorithm_store(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t len)
 {
-	struct zram *zram = dev_to_zram(dev);
-	size_t sz;
-
-	down_write(&zram->init_lock);
-	if (init_done(zram)) {
-		up_write(&zram->init_lock);
-		pr_info("Can't change algorithm for initialized device\n");
-		return -EBUSY;
-	}
-	strlcpy(zram->compressor, buf, sizeof(zram->compressor));
-
-	/* ignore trailing newline */
-	sz = strlen(zram->compressor);
-	if (sz > 0 && zram->compressor[sz - 1] == '\n')
-		zram->compressor[sz - 1] = 0x00;
-
-	if (!zcomp_available_algorithm(zram->compressor))
-		len = -EINVAL;
-
-	up_write(&zram->init_lock);
 	return len;
 }
 

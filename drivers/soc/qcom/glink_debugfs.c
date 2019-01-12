@@ -53,7 +53,7 @@ static const char * const xprt_st_string[] = {
 	[GLINK_XPRT_FAILED] = "FAILED"
 };
 
-#if defined(CONFIG_DEBUG_FS)
+#if defined(CONFIG_GLINK_DEBUG)
 #define GLINK_DBGFS_NAME_SIZE (2 * GLINK_NAME_SIZE + 1)
 
 struct glink_dbgfs_dent {
@@ -152,7 +152,7 @@ const char *glink_get_ch_state_string(
 }
 EXPORT_SYMBOL(glink_get_ch_state_string);
 
-#if defined(CONFIG_DEBUG_FS)
+#if defined(CONFIG_GLINK_DEBUG)
 /**
  * glink_dfs_create_file() - create the debugfs file
  * @name:	debugfs file name
@@ -780,4 +780,4 @@ EXPORT_SYMBOL(glink_debugfs_init);
 
 void glink_debugfs_exit(void) { }
 EXPORT_SYMBOL(glink_debugfs_exit);
-#endif /* CONFIG_DEBUG_FS */
+#endif /* CONFIG_GLINK_DEBUG */

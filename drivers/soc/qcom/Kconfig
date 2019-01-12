@@ -530,6 +530,11 @@ config MSM_SPCOM
 	  spcom provides clients/server API, although currently only one client
 	  or server is allowed per logical channel.
 
+config GLINK_DEBUG
+	depends on MSM_GLINK
+	default n
+	bool "Provide glink debugging info via debugfs"
+
 config MSM_SMEM_LOGGING
 	depends on MSM_SMEM
 	bool "MSM Shared Memory Logger"

@@ -5543,7 +5543,7 @@ static void tx_func(struct kthread_work *work)
 {
 	struct channel_ctx *ch_ptr;
 	uint32_t prio;
-	uint32_t tx_ready_head_prio;
+	uint32_t tx_ready_head_prio = 0;
 	int ret;
 	struct channel_ctx *tx_ready_head = NULL;
 	bool transmitted_successfully = true;

@@ -121,6 +121,14 @@ config BFQ_GROUP_IOSCHED
 	Enable hierarchical scheduling in BFQ, using the blkio
 	(cgroups-v1) or io (cgroups-v2) controller.
 
+config IOSCHED_ANXIETY
+	tristate "Anxiety I/O scheduler"
+	default y
+	---help---
+	  The Anxiety I/O scheduler prioritizes latency over everything
+		else. When a request comes in, it will use a lighweight
+		selection algorithm to swiftly process the current pending task.
+
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -164,6 +172,8 @@ choice
 		bool "SIO" if IOSCHED_SIO=y
 	config DEFAULT_SIOPLUS
 		bool "SIOPLUS" if IOSCHED_SIOPLUS=y
+	config DEFAULT_ANXIETY
+		bool "Anxiety" if IOSCHED_ANXIETY=y
 
 endchoice
 
@@ -181,6 +191,7 @@ config DEFAULT_IOSCHED
 	default "tripndroid" if DEFAULT_TRIPNDROID
 	default "sio" if DEFAULT_SIO
 	default "sioplus" if DEFAULT_SIOPLUS
+	default "anxiety" if DEFAULT_ANXIETY
 
 endmenu
 

@@ -1166,11 +1166,11 @@ VosWDThread
             VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_INFO,
                "%s: controller thread %s id: %d is suspended do not attemp probing",
                __func__, current->comm, current->pid);
-        /*
-         * Process here and return without processing any SSR
-         * related logic.
-         */
-        break;
+       /*
+       * Process here and return without processing any SSR
+       * related logic.
+       */
+       break;
       }
       /* Check for any Active Entry Points
        * If active, delay SSR until no entry point is active or

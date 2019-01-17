@@ -29,6 +29,10 @@
 /* required for enum tfa9912_irq */
 #include "tfa98xx_tfafieldnames.h"
 
+#ifdef CONFIG_SOUND_CONTROL
+extern struct snd_soc_codec *tfa98xx_codec_ptr;
+#endif
+
 #define TFA98XX_VERSION	TFA98XX_API_REV_STR
 
 #define I2C_RETRIES 50
@@ -2619,6 +2623,10 @@ static int tfa98xx_probe(struct snd_soc_codec *codec)
 	INIT_DELAYED_WORK(&tfa98xx->tapdet_work, tfa98xx_tapdet_work);
 
 	tfa98xx->codec = codec;
+
+#ifdef CONFIG_SOUND_CONTROL
+	tfa98xx_codec_ptr = codec;
+#endif
 
 	ret = tfa98xx_load_container(tfa98xx);
 	pr_debug("Container loading requested: %d\n", ret);

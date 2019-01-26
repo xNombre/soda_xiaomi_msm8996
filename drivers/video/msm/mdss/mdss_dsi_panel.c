@@ -22,6 +22,7 @@
 #include <linux/qpnp/pwm.h>
 #include <linux/err.h>
 #include <linux/string.h>
+#include <linux/display_state.h>
 
 #include "mdss_dsi.h"
 #include "mdss_debug.h"
@@ -36,8 +37,15 @@
 
 DEFINE_LED_TRIGGER(bl_led_trigger);
 
+
 static bool mdss_panel_reset_skip;
+bool display_on = true;
 static struct mdss_panel_info *mdss_pinfo = NULL;
+
+bool is_display_on()
+{
+	return display_on;
+}
 
 bool mdss_prim_panel_is_dead(void)
 {
@@ -1041,6 +1049,8 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 
 	mdss_dsi_panel_off_hdmi(ctrl, pinfo);
 
+	display_on = false;
+
 end:
 	/* clear idle state */
 	ctrl->idle = false;
@@ -1058,6 +1068,8 @@ static int mdss_dsi_panel_low_power_config(struct mdss_panel_data *pdata,
 		pr_err("%s: Invalid input data\n", __func__);
 		return -EINVAL;
 	}
+
+	display_on = true;
 
 	pinfo = &pdata->panel_info;
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,

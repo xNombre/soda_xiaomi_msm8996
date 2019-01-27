@@ -1,0 +1,62 @@
+#!/bin/bash
+
+LOC=$(pwd)
+DEVICES=( gemini lithium scorpio capricorn )
+TOOLCHAIN="$LOC/aarch64-xnombre-linux-android/bin/aarch64-xnombre-linux-android-"
+ARCH=arm64
+KERNEL_IMAGE="Image.gz-dtb"
+J=$(nproc)
+VER=$1
+
+echo "Welcome to Soda chain compiler!"
+echo "You've specified $VER version!"
+
+mkdir "compiled/release-v$VER" > /dev/null
+
+for DEVICE in "${DEVICES[@]}"
+do
+
+echo "==============================================================="
+echo "		compiling for: $DEVICE"
+echo "==============================================================="
+
+if [[ $DEVICE == 'lithium' ]]; then
+#This speeds up compitaion because lithium has disabled ttbr0
+	OUT=lithium_out_eas
+else
+	OUT=chain_out_eas
+fi
+
+#Clean
+rm package/zImage 2> /dev/null
+rm $OUT/arch/$ARCH/boot/$KERNEL_IMAGE 2> /dev/null
+
+DEFCONFIG=soda_${DEVICE}_eas_defconfig
+NAME=TheSodaKernel-$DEVICE-eas
+
+#Make defconfig
+make O=$OUT ARCH=$ARCH -j$J CROSS_COMPILE=$TOOLCHAIN $DEFCONFIG
+
+#Compile
+make O=$OUT ARCH=$ARCH -j$J CROSS_COMPILE="ccache $TOOLCHAIN" CROSS_COMPILE_ARM32="ccache arm-linux-gnueabi-"
+
+#Pack zip
+if [ -e $OUT/arch/$ARCH/boot/$KERNEL_IMAGE ]; then
+	cp $OUT/arch/$ARCH/boot/$KERNEL_IMAGE package/zImage
+	cd package
+	sed -i "s/dummy-device/${DEVICE}/g" anykernel.sh
+	zip -r9 ../compiled/release-v$VER/$NAME-v$VER.zip *
+	sed -i "s/${DEVICE}/dummy-device/g" anykernel.sh
+	echo "Package created successfully!"
+else
+	echo 'No boot image!'
+fi
+
+#Go back to root
+cd $LOC
+
+echo "==============================================================="
+
+#end loop
+done
+

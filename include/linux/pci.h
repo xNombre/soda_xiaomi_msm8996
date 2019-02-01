@@ -1609,6 +1609,8 @@ enum pci_fixup_pass {
 		suspend_late##hook, vendor, device,	\
 		PCI_ANY_ID, 0, hook)
 
+#ifndef CONFIG_PCI_DISABLE_NON_MSM
+
 #ifdef CONFIG_PCI_QUIRKS
 void pci_fixup_device(enum pci_fixup_pass pass, struct pci_dev *dev);
 int pci_dev_specific_acs_enabled(struct pci_dev *dev, u16 acs_flags);
@@ -1622,7 +1624,18 @@ static inline int pci_dev_specific_acs_enabled(struct pci_dev *dev,
 	return -ENOTTY;
 }
 static inline void pci_dev_specific_enable_acs(struct pci_dev *dev) { }
-#endif
+#endif /* CONFIG_PCI_QUIRKS */
+
+#else
+void pci_fixup_device(enum pci_fixup_pass pass, struct pci_dev *dev);
+static inline int pci_dev_specific_acs_enabled(struct pci_dev *dev,
+					       u16 acs_flags)
+{
+	return -ENOTTY;
+}
+static inline void pci_dev_specific_enable_acs(struct pci_dev *dev) { }
+#endif /* CONFIG_PCI_DISABLE_NON_MSM */
+
 
 void __iomem *pcim_iomap(struct pci_dev *pdev, int bar, unsigned long maxlen);
 void pcim_iounmap(struct pci_dev *pdev, void __iomem *addr);

@@ -28,6 +28,7 @@
 #include <asm/dma.h>	/* isa_dma_bridge_buggy */
 #include "pci.h"
 
+#ifndef CONFIG_PCI_DISABLE_NON_MSM
 /*
  * Decoding should be disabled for a PCI device during BAR sizing to avoid
  * conflict. But doing so may cause problems on host bridge and perhaps other
@@ -2955,6 +2956,7 @@ static void quirk_intel_ntb(struct pci_dev *dev)
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0e08, quirk_intel_ntb);
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0e0d, quirk_intel_ntb);
 
+#endif /* CONFIG_PCI_DISABLE_NON_MSM */
 static ktime_t fixup_debug_start(struct pci_dev *dev,
 				 void (*fn)(struct pci_dev *dev))
 {
@@ -2984,6 +2986,8 @@ static void fixup_debug_report(struct pci_dev *dev, ktime_t calltime,
 			 fn, duration, dev_name(&dev->dev));
 	}
 }
+
+#ifndef CONFIG_PCI_DISABLE_NON_MSM
 
 /*
  * Some BIOS implementations leave the Intel GPU interrupts enabled,
@@ -3180,6 +3184,8 @@ DECLARE_PCI_FIXUP_RESUME_EARLY(PCI_VENDOR_ID_INTEL, 0x156d,
 			       quirk_apple_wait_for_thunderbolt);
 #endif
 
+#endif /* CONFIG_PCI_DISABLE_NON_MSM */
+
 static void pci_do_fixups(struct pci_dev *dev, struct pci_fixup *f,
 			  struct pci_fixup *end)
 {
@@ -3316,6 +3322,7 @@ static int __init pci_apply_final_quirks(void)
 
 fs_initcall_sync(pci_apply_final_quirks);
 
+#ifndef CONFIG_PCI_DISABLE_NON_MSM
 /*
  * Followings are device-specific reset methods which can be used to
  * reset a single function if other methods (e.g. FLR, PM D0->D3) are
@@ -3929,3 +3936,5 @@ void pci_dev_specific_enable_acs(struct pci_dev *dev)
 		}
 	}
 }
+
+#endif /* CONFIG_PCI_DISABLE_NON_MSM */

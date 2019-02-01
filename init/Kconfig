@@ -1697,6 +1697,14 @@ config PCI_QUIRKS
 	  bugs/quirks. Disable this only if your target machine is
 	  unaffected by PCI quirks.
 
+config PCI_DISABLE_NON_MSM
+	bool "Strip non-msm quirks for PCI" if EXPERT
+	help
+	  MSM needs quirks common functions to apply energy fixes. However,
+	  other non-msm quirks are not needed. This disables other fixes so some of the
+	  memory could be preserved.
+	depends on PCI_QUIRKS
+
 config EMBEDDED
 	bool "Embedded system"
 	option allnoconfig_y

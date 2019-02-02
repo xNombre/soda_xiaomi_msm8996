@@ -15,7 +15,7 @@
  *
  */
 
-#define BOEFFLA_WL_BLOCKER_VERSION	"1.2.0"
+#define WAKELOCK_BLOCKER_VERSION	"1.2.0"
 
 #define LIST_WL_DEFAULT		 "wlan;wlan_wow_wl;wlan_extscan_wl;netmgr_wl;NETLINK;IPA_WS;wlan_ipa;wlan_pno_wl;wcnss_filter_lock"
 #define LENGTH_LIST_WL_DEFAULT	 sizeof(LIST_WL_DEFAULT)
@@ -24,7 +24,7 @@
 
 extern void wakeup_source_deactivate(struct wakeup_source *ws);
 
-#ifdef CONFIG_BOEFFLA_WL_BLOCKER
+#ifdef CONFIG_WAKELOCK_BLOCKER
 bool is_blocked(struct wakeup_source *ws);
 #else
 inline bool is_blocked(struct wakeup_source *ws)

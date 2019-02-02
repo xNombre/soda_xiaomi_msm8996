@@ -41,7 +41,7 @@
 #include <linux/device.h>
 #include <linux/miscdevice.h>
 #include <linux/fb.h>
-#include "boeffla_wl_blocker.h"
+#include "wakelock_blocker.h"
 
 char list_wl[LENGTH_LIST_WL];
 char list_wl_default[LENGTH_LIST_WL_DEFAULT];
@@ -134,59 +134,59 @@ static ssize_t wakelock_blocker_default_store(struct device * dev, struct device
 
 static ssize_t version_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-	return sprintf(buf, "%s\n", BOEFFLA_WL_BLOCKER_VERSION);
+	return sprintf(buf, "%s\n", WAKELOCK_BLOCKER_VERSION);
 }
 
 static DEVICE_ATTR(wakelock_blocker, 0644, wakelock_blocker_show, wakelock_blocker_store);
 static DEVICE_ATTR(wakelock_blocker_default, 0644, wakelock_blocker_default_show, wakelock_blocker_default_store);
 static DEVICE_ATTR(version, 0444, version_show, NULL);
 
-static struct attribute *boeffla_wl_blocker_attributes[] = {
+static struct attribute *wakelock_blocker_attributes[] = {
 	&dev_attr_wakelock_blocker.attr,
 	&dev_attr_wakelock_blocker_default.attr,
 	&dev_attr_version.attr,
 	NULL
 };
 
-static struct attribute_group boeffla_wl_blocker_control_group = {
-	.attrs = boeffla_wl_blocker_attributes,
+static struct attribute_group wakelock_blocker_control_group = {
+	.attrs = wakelock_blocker_attributes,
 };
 
-static struct miscdevice boeffla_wl_blocker_control_device = {
+static struct miscdevice wakelock_blocker_control_device = {
 	.minor = MISC_DYNAMIC_MINOR,
-	.name = "boeffla_wakelock_blocker",
+	.name = "wakelock_blocker",
 };
 
-static int __init boeffla_wl_blocker_init(void)
+static int __init wakelock_blocker_init(void)
 {
 	int ret;
 
 	fb_notifier.notifier_call = fb_notifier_callback;
 	ret = fb_register_client(&fb_notifier);
 	if (ret) {
-		pr_err("Boeffla WL blocker: unable to register fb_notifier.\n");
+		pr_err("Wakelock blocker: unable to register fb_notifier.\n");
 		return ret;
 	}
 
-	ret = misc_register(&boeffla_wl_blocker_control_device);
+	ret = misc_register(&wakelock_blocker_control_device);
 	if (ret) {
-		pr_err("Boeffla WL blocker: failed to register misc.\n");
+		pr_err("Wakelock blocker: failed to register misc.\n");
 		return ret;
 	}
 
-	ret = sysfs_create_group(&boeffla_wl_blocker_control_device.this_device->kobj,
-				&boeffla_wl_blocker_control_group);
+	ret = sysfs_create_group(&wakelock_blocker_control_device.this_device->kobj,
+				&wakelock_blocker_control_group);
 	if (ret) {
-		pr_err("Boeffla WL blocker: failed to create sys fs object.\n");
+		pr_err("Wakelock blocker: failed to create sys fs object.\n");
 		return ret;
 	}
 
 	sprintf(list_wl_default, "%s" , LIST_WL_DEFAULT);
 	build_search_string(list_wl_default, list_wl);
 
-	pr_info("Boeffla WL blocker: driver version %s started\n", BOEFFLA_WL_BLOCKER_VERSION);
+	pr_info("Wakelock blocker: driver version %s started\n", WAKELOCK_BLOCKER_VERSION);
 
 	return 0;
 }
 
-module_init(boeffla_wl_blocker_init);
+module_init(wakelock_blocker_init);

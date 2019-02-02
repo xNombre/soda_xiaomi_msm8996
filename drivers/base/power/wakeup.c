@@ -18,7 +18,7 @@
 #include <trace/events/power.h>
 
 #include "power.h"
-#include "boeffla_wl_blocker.h"
+#include "wakelock_blocker.h"
 
 /*
  * If set, the suspend/hibernate code will abort transitions to a sleep state

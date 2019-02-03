@@ -10,7 +10,7 @@
  * GNU General Public License for more details.
  */
 
-#ifdef CONFIG_DEBUG_FS
+#if defined CONFIG_DEBUG_FS && !defined CONFIG_IPA_DEBUG
 
 #include <linux/debugfs.h>
 #include <linux/kernel.h>

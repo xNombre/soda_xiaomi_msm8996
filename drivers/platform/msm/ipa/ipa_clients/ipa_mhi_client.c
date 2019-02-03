@@ -166,7 +166,7 @@ struct ipa_mhi_client_ctx {
 
 static struct ipa_mhi_client_ctx *ipa_mhi_client_ctx;
 
-#ifdef CONFIG_DEBUG_FS
+#if defined CONFIG_DEBUG_FS && !defined CONFIG_IPA_DEBUG
 #define IPA_MHI_MAX_MSG_LEN 512
 static char dbg_buff[IPA_MHI_MAX_MSG_LEN];
 static struct dentry *dent;

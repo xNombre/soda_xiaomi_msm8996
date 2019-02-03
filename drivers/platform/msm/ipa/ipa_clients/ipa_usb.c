@@ -1779,7 +1779,7 @@ connect_ul_fail:
 	return result;
 }
 
-#ifdef CONFIG_DEBUG_FS
+#if defined CONFIG_DEBUG_FS && !defined CONFIG_IPA_DEBUG
 static char dbg_buff[IPA_USB_MAX_MSG_LEN];
 
 static char *ipa3_usb_cons_state_to_string(enum ipa3_usb_cons_state state)

@@ -143,6 +143,10 @@ config IPA
 	  Kernel and user-space processes can call the IPA driver
 	  to configure IPA core.
 
+config IPA_DEBUG
+	depends on IPA
+	bool "Enable IPA debugging via debugfs"
+
 config IPA3
 	tristate "IPA3 support"
 	depends on SPS && NET

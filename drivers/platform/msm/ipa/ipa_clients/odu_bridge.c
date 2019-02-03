@@ -155,7 +155,7 @@ struct odu_bridge_ctx {
 };
 static struct odu_bridge_ctx *odu_bridge_ctx;
 
-#ifdef CONFIG_DEBUG_FS
+#if defined CONFIG_DEBUG_FS && !defined CONFIG_IPA_DEBUG
 #define ODU_MAX_MSG_LEN 512
 static char dbg_buff[ODU_MAX_MSG_LEN];
 #endif
@@ -667,7 +667,7 @@ static long compat_odu_bridge_ioctl(struct file *file,
 }
 #endif
 
-#ifdef CONFIG_DEBUG_FS
+#if defined CONFIG_DEBUG_FS && !defined CONFIG_IPA_DEBUG
 static struct dentry *dent;
 static struct dentry *dfile_stats;
 static struct dentry *dfile_mode;

@@ -66,7 +66,7 @@
 	IPADMA_DBG_LOW("EXIT\n")
 
 
-#ifdef CONFIG_DEBUG_FS
+#if defined CONFIG_DEBUG_FS && !defined CONFIG_IPA_DEBUG
 #define IPADMA_MAX_MSG_LEN 4096
 static char dbg_buff[IPADMA_MAX_MSG_LEN];
 static void ipa_dma_debugfs_init(void);
@@ -803,7 +803,7 @@ fail:
 	IPADMA_FUNC_EXIT();
 }
 
-#ifdef CONFIG_DEBUG_FS
+#if defined CONFIG_DEBUG_FS && !defined CONFIG_IPA_DEBUG
 static struct dentry *dent;
 static struct dentry *dfile_info;
 

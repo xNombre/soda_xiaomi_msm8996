@@ -1358,6 +1358,9 @@ static int ufs_qcom_cpu_to_group(struct ufs_qcom_host *host, int cpu)
 {
 	int i;
 
+	if (!host->pm_qos.groups)
+		return;
+
 	if (cpu >= 0 && cpu < num_possible_cpus())
 		for (i = 0; i < host->pm_qos.num_groups; i++)
 			if (cpumask_test_cpu(cpu, &host->pm_qos.groups[i].mask))

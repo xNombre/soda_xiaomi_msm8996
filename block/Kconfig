@@ -111,6 +111,20 @@ config BLK_CMDLINE_PARSER
 
 	See Documentation/block/cmdline-partition.txt for more information.
 
+config BLOCK_TUNER
+	bool "Enable Block tuner"
+	help
+	  This enables kernel-side block tuner. It's aim is to tune kernel parameters
+	  when device display state is changed.
+	  On screen disabled it softens writeback timeout and changes I/O schedule to improve
+	  battery backup.
+	  On screen enabled all disk syncing callbacks get disabled to avoid any apps
+	  blocking.
+
+	  This is a part of The Soda Kernel.
+
+	  If you want to improve overall device experience, say Y.
+
 menu "Partition Types"
 
 source "block/partitions/Kconfig"

@@ -101,6 +101,7 @@ static inline int avc_hash(u32 ssid, u32 tsid, u16 tclass)
 	return (ssid ^ (tsid<<2) ^ (tclass<<4)) & (AVC_CACHE_SLOTS - 1);
 }
 
+#ifdef CONFIG_AUDIT
 /**
  * avc_dump_av - Display an access vector in human-readable form.
  * @tclass: target security class
@@ -135,6 +136,7 @@ static void avc_dump_av(struct audit_buffer *ab, u16 tclass, u32 av)
 
 	audit_log_format(ab, " }");
 }
+#endif
 
 /**
  * avc_dump_query - Display a SID pair and a class in human-readable form.

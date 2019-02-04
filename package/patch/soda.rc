@@ -31,12 +31,6 @@ on apply-soda
     # vm
     write /proc/sys/vm/vfs_cache_pressure 80
     write /proc/sys/vm/swappiness 40
-    write /proc/sys/vm/dirty_ratio 10
-    write /proc/sys/vm/dirty_background_ratio 5
-    write /proc/sys/vm/dirty_writeback_centisecs 900
-
-    # soon
-    # write /sys/kernel/dyn_fsync/Dyn_fsync_active 1
 
     # nope
     write /sys/module/cpu_boost/parameters/input_boost_enabled 0

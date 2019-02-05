@@ -173,7 +173,6 @@ config DEFAULT_IOSCHED
 	default "maple" if DEFAULT_MAPLE
 	default "sioplus" if DEFAULT_SIOPLUS
 	default "sio" if DEFAULT_SIO
-	default "sioplus" if DEFAULT_SIOPLUS
 	default "anxiety" if DEFAULT_ANXIETY
 
 endmenu

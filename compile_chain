@@ -8,6 +8,15 @@ KERNEL_IMAGE="Image.gz-dtb"
 J=$(nproc)
 VER=$1
 
+if [[ $1 == 'cfg' ]]; then
+	for DEVICE in "${DEVICES[@]}"
+	do
+		DEFCONFIG=soda_${DEVICE}_eas_defconfig
+		make O=chain_out_eas ARCH=$ARCH -j$J CROSS_COMPILE=$TOOLCHAIN menuconfig KCONFIG_CONFIG=$LOC/arch/arm64/configs/$DEFCONFIG
+	done
+	exit
+fi
+
 echo "Welcome to Soda chain compiler!"
 echo "You've specified $VER version!"
 

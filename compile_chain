@@ -29,7 +29,7 @@ fi
 
 #Clean
 rm package/zImage 2> /dev/null
-rm $OUT/arch/$ARCH/boot/$KERNEL_IMAGE 2> /dev/null
+rm -r $OUT/arch/$ARCH/boot 2> /dev/null
 
 DEFCONFIG=soda_${DEVICE}_eas_defconfig
 NAME=TheSodaKernel-$DEVICE-eas
